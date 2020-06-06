@@ -54,6 +54,7 @@ public class Main {
 		
 		final Text txtHost = new Text(shell, SWT.BORDER);
 		txtHost.setBounds(131, 10, 182, 21);
+		txtHost.setMessage("Hostname/IP (e.g. \"8.8.8.8\")");
 		
 		final Button btnPort = new Button(shell, SWT.CHECK);
 		btnPort.setBounds(319, 13, 50, 16);
@@ -90,6 +91,7 @@ public class Main {
 		final Button btnStartMonitoring = new Button(shell, SWT.TOGGLE);
 		btnStartMonitoring.setBounds(196, 37, 238, 25);
 		btnStartMonitoring.setText("Start Monitoring");
+		shell.setDefaultButton(btnStartMonitoring);
 		
 		Label label = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setBounds(10, 68, 424, 2);
