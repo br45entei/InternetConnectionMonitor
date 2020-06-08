@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
@@ -109,8 +111,14 @@ public class Main {
 		final long[] lastPingTime = {0L};
 		final String[] hostName = {txtHost.getText()};
 		final Integer[] port = {btnPort.getSelection() ? Integer.valueOf(spnrPort.getSelection()) : null};
-		@SuppressWarnings("resource")
-		final LogKeeper pr = new LogKeeper(StandardCharsets.ISO_8859_1, true, 20000);//TODO Add a SimpleDateFormat prefix option that affects the various print... methods in this class
+		final SimpleDateFormat format = new SimpleDateFormat("[dd/MM/yyyy HH:mm:ss.SSS] ");
+		@SuppressWarnings("resource") //Eclipse says this in unnecessary, but when I remove it it complains about 'pr' ...
+		final LogKeeper pr = new LogKeeper(StandardCharsets.ISO_8859_1, true, 20000) {
+			@Override
+			public String getLogPrefix() {
+				return format.format(new Date(System.currentTimeMillis()));
+			}
+		};//TODO Add a SimpleDateFormat prefix option that affects the various print... methods in this class
 		
 		btnStartMonitoring.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -220,6 +228,7 @@ public class Main {
 		
 		shell.open();
 		shell.layout();
+		stxtOutput.forceFocus();
 		
 		while(!shell.isDisposed()) {
 			updateUI[0].run();
@@ -232,4 +241,5 @@ public class Main {
 		SWTResourceManager.dispose();
 		display.dispose();
 	}
+	
 }
